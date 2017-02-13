@@ -49,8 +49,8 @@
 uint32_t pin_sda, pin_scl;
 
 I2CBuses i2c_buses_default = {
-    { 5 },
-    { 6 }
+    { 3 },//SDA
+    { 4 }//SCL
 };
 
 

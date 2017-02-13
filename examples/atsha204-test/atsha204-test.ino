@@ -1,12 +1,14 @@
 #include "atca_basic_tests.h"
 
-ATCAIfaceCfg *gCfg = NULL;
+
+
+ATCAIfaceCfg *gCfg = &cfg_sha204a_i2c_default;
 
 void setup() {
   //Initialize Serial2 and wait for port to open:
   Serial.begin(9600);
   pinMode(13, OUTPUT);
-  atca_basic_tests(ATSHA204A);
+  test_basic_init();
 }
 
 void loop() {
