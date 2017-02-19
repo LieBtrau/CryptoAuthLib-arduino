@@ -85,13 +85,15 @@ void UnityPrint(const char* string)
 				UNITY_OUTPUT_CHAR(*pch);
 			//write escaped carriage returns
 			else if (*pch == 13) {
-				UNITY_OUTPUT_CHAR('\\');
-				UNITY_OUTPUT_CHAR('r');
+                UNITY_OUTPUT_CHAR('\r');
+                //UNITY_OUTPUT_CHAR('\\');
+                //UNITY_OUTPUT_CHAR('r');
 			}
 			//write escaped line feeds
 			else if (*pch == 10) {
-				UNITY_OUTPUT_CHAR('\\');
-				UNITY_OUTPUT_CHAR('n');
+                UNITY_OUTPUT_CHAR('\n');
+                //UNITY_OUTPUT_CHAR('\\');
+                //UNITY_OUTPUT_CHAR('n');
 			}
 			// unprintable characters are shown as codes
 			else{
@@ -102,7 +104,8 @@ void UnityPrint(const char* string)
 		}
 	}
 
-	printf("\r\n");  // LJC - added for
+    UNITY_OUTPUT_CHAR('\r');
+    UNITY_OUTPUT_CHAR('\n');
 }
 
 //-----------------------------------------------
