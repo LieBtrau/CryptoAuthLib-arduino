@@ -1,14 +1,20 @@
 #include "atca_basic_tests.h"
 
 ATCAIfaceCfg *gCfg = &cfg_sha204a_i2c_default;
-byte randnr[64];
+byte buffer[64];
 
 void setup() {
     Serial.begin(9600);
     //unitTests();
-    if(TRNG(randnr,64))
+    if(getSerialNumber(buffer))
     {
-        print(randnr,64);
+        Serial.print("Serial number: ");
+        print(buffer, 9);
+    }
+    if(TRNG(buffer,64))
+    {
+        Serial.print("Random number: ");
+        print(buffer,64);
     }
 }
 
@@ -41,6 +47,23 @@ static int TRNG(byte *dest, unsigned size)
         return 0;
     }
     return 1;
+}
+
+bool getSerialNumber(byte* buf)
+{
+    if(atcab_init( gCfg ) != ATCA_SUCCESS)
+    {
+        return false;
+    }
+    if(atcab_read_serial_number(buf) != ATCA_SUCCESS)
+    {
+        return false;
+    }
+    if(atcab_release() != ATCA_SUCCESS)
+    {
+        return false;
+    }
+    return true;
 }
 
 void unitTests()
