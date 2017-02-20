@@ -42,7 +42,6 @@
  */
 
 #include "Arduino.h"
-#include <stdint.h>
 #include "i2c_bitbang_at88ck9000.h"
 
 
@@ -201,7 +200,7 @@ void i2c_send_stop(void)
 void i2c_send_wake_token(void)
 {
 	I2C_DATA_LOW();
-	delay_us(80);
+	delayMicroseconds(80);
 	I2C_DATA_HIGH();
 }
 
