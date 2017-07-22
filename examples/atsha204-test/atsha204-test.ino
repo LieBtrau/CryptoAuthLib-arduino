@@ -2,24 +2,27 @@
 
 ATCAIfaceCfg *gCfg = &cfg_sha204a_i2c_default;
 byte buffer[64];
+HardwareSerial* debugPort;
 
 void setup() {
-    Serial.begin(9600);
+  debugPort=&Serial1;
+    debugPort->begin(9600);
+    debugPort->println("Hello there!");
     //unitTests();
     if(getSerialNumber(buffer))
     {
-        Serial.print("Serial number: ");
+        debugPort->print("Serial number: ");
         print(buffer, 9);
     }
     if(TRNG(buffer,64))
     {
-        Serial.print("Random number: ");
+        debugPort->print("Random number: ");
         print(buffer,64);
     }
 }
 
 void loop() {
-    //Serial.print("0");
+    //debugPort->print("0");
     delay(500);
 }
 
@@ -86,16 +89,16 @@ void unitTests()
 
 void print(const byte* array, byte length)
 {
-    Serial.print("Length = ");Serial.println(length,DEC);
+    debugPort->print("Length = ");debugPort->println(length,DEC);
     char strA[3];
     for (byte i = 0; i < length; i++)
     {
         sprintf(strA,"%02X ",array[i]);
-        Serial.print(strA);
+        debugPort->print(strA);
         if ((i + 1) % 16 == 0)
         {
-            Serial.println();
+            debugPort->println();
         }
     }
-    Serial.println();
+    debugPort->println();
 }

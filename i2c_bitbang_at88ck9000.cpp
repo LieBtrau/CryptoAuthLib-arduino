@@ -48,10 +48,16 @@
 uint32_t pin_sda, pin_scl;
 
 I2CBuses i2c_buses_default = {
+#ifdef NUCLEO_blablabla
     { 3 },//SDA
     { 4 }//SCL
+#elif defined(ARDUINO_GENERIC_STM32F103C)
+    { PB9 },//SDA
+    { PB8 }//SCL
+#else
+#error You need to define the pins to be used for bitbanging I²C
+#endif
 };
-
 
 void I2C_ENABLE()
 {
