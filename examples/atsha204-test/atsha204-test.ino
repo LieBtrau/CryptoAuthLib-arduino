@@ -14,6 +14,7 @@ void setup() {
         debugPort->print("Serial number: ");
         print(buffer, 9);
     }
+    debugPort->println("Done reading serial number.");
     if(TRNG(buffer,64))
     {
         debugPort->print("Random number: ");
@@ -54,6 +55,7 @@ static int TRNG(byte *dest, unsigned size)
 
 bool getSerialNumber(byte* buf)
 {
+  byte status;
     if(atcab_init( gCfg ) != ATCA_SUCCESS)
     {
         return false;
@@ -61,6 +63,14 @@ bool getSerialNumber(byte* buf)
     if(atcab_read_serial_number(buf) != ATCA_SUCCESS)
     {
         return false;
+    }
+    if((status=atcab_wakeup()) != ATCA_SUCCESS)
+    {
+      return false;
+    }
+    if((status=atcab_sleep()) != ATCA_SUCCESS)
+    {
+      return false;
     }
     if(atcab_release() != ATCA_SUCCESS)
     {
